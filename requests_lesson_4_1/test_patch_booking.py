@@ -76,7 +76,7 @@ class TestPatchBooking():
 
         # <Response [200]> != 403, Данные брони с ID обновились 1199
         patch_booking_4 = auth_session.patch(f"{BASE_URL}/booking/{booking_id}", json=booking_patch_data_4)
-        assert patch_booking_4 == 403, f"Обновились данные в брони с ID {booking_id}"
+        assert patch_booking_4.status_code == 403, f"Обновились данные в брони с ID {booking_id}"
         get_booking = auth_session.get(f"{BASE_URL}/booking/{booking_id}")
         assert get_booking.status_code == 200, f"Ошибка при получении брони с ID {booking_id}"
 
