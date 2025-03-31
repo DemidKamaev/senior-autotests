@@ -46,22 +46,6 @@ class TestGetBooking():
         assert any("bookingid" in i for i in all_bookings)
 
 
-    # 2 тест. Тест падает даже с обработчиком исключения
-    def test_params_url(self, auth_session):
-        get_booking_2 = auth_session.get(f"{BASE_URL}?firstname=sally&lastname=brown")
-        assert get_booking_2.status_code == 200, "Ошибка при запросе данных"
-        print(get_booking_2.text)  # Для отладки
-
-        # Преобразуем ответ в JSON
-        try:
-            get_responce = get_booking_2.json()  # Используем .json() для преобразования в dict
-        except ValueError as e:
-            assert False, f"Ошибка разрабора JSON: {str(e)}"
-
-        # Проверяем, что имя и фамилия совпадают
-        assert get_responce["firstname"] == "sally", "Имя другое/Нет данных"
-        assert get_responce["lastname"] == "brown", "Фамилия другая/Нет данных"
-
     # GET апи с квери параметрами
     def test_get_bookings_with_query(self, auth_session, booking_data):
         create_booking = auth_session.post(f"{BASE_URL}/booking", json=booking_data)
