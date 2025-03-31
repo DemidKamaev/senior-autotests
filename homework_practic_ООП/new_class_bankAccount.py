@@ -9,15 +9,15 @@ class BankAccount:
             self.__balance += amount
             print(f"Баланс пополнен на: {amount}")
         else:
-            raise ValueError
+            raise ValueError("Сумма пополнения должна быть положительной")
 
     def withdraw(self, amount):
         """Метод для снятия со счета"""
         if self.__balance >= amount:
             self.__balance -= amount
-            print(f'С баланса снято: {amount}')
+            return f'С баланса снято: {amount}'
         else:
-            raise ValueError
+            raise ValueError("Недостаточно средст на счете")
 
     def get_balance(self):
         """Метод для получение текущего баланса"""
@@ -42,14 +42,27 @@ class CheckingAccount(BankAccount):
 
     def withdraw(self, amount):
         """Переопределение метода withdraw(self, amount)"""
-        super().withdraw(amount)   # Вызываем метод withdraw из родительского класса
+        # Убираем проверку на наличие средств на счете
+        if amount > 0:
+            self._BankAccount__balance -= amount  # Изменение приватного атрибута
+            return f'С баланса снято: {amount}'
+        else:
+            raise ValueError("Сумма снятия должна быть положительная")
 
 
 user_1 = SavingsAccount("Demid", 0.05, 500)  # Предоставлять начальный баланс
 user_1.deposit(500)
-user_1.withdraw(100)
+
+try:
+    user_1.withdraw(1000)  # Попытка снять 1000
+except ValueError as ve:
+    print(ve)
 user_1.apply_interest()
 
-# Метод apply_interest теперь правильно использует баланс со счета,
-# а метод withdraw для CheckingAccount правильно вызывает родительский метод.
+user_2 = CheckingAccount("Ivan", 0)
+user_2.deposit(1000)
+user_2.withdraw(1500)  # Снятие средств, даже если баланс будет отрицательным
+print(user_2.get_balance())
+
+
 
