@@ -271,7 +271,7 @@ class TestItems():
         print(data_post)
 
         put_responce = requests.put(f"{self.endpoint}{item_id}", json=item_data_update)
-        assert put_responce.status_code == 422, (f"Неверный статус без сессии: "
+        assert put_responce.status_code == 401, (f"Неверный статус без сессии: "
                                                  f"{put_responce.status_code}, тело ответа: {put_responce.text}")
 
         assert data_post["title"] == item_data["title"], "Данные в поле title не совпадают"
