@@ -3,7 +3,8 @@ import requests
 from project_4_3.config.constant import BASE_URL, API_HEADERS
 import random
 
-class TestItems():
+
+class TestItems:
     # POST /items — создание нового элемента.
     endpoint = f"{BASE_URL}/api/v1/items/"
 
@@ -31,7 +32,6 @@ class TestItems():
     def test_create_not_valid_data_2(self, auth_session, item_data_not_valid_2):
         responce = auth_session.post(self.endpoint, json=item_data_not_valid_2)
         assert responce.status_code == 422, f"Стутус код: {responce.status_code}, {responce.text}"
-
 
     # GET /api/v1/items/
     def test_get_items(self, auth_session):
@@ -88,7 +88,6 @@ class TestItems():
 
         assert data["count"] - 1 == len(data["data"]), "'count' - 1 должен быть равен кол-ву элементов в списке"
 
-
     def test_get_items_query_params_2(self, auth_session):
         limit = random.randint(1, 10)
         responce = auth_session.get(f"{self.endpoint}?limit={limit}")
@@ -134,8 +133,6 @@ class TestItems():
     # ?skip = 40 & limit = 5 (9 page)
     def test_scope_page(self, auth_session):
         params_page_1 = {"skip": 0, "limit": 5}
-        params_page_2 = {"skip": 5, "limit": 5}
-        params_page_9 = {"skip": 40, "limit": 5}
         get_responce = auth_session.get(f"{self.endpoint}", params=params_page_1)
         assert get_responce.status_code == 200, (f"Ошибка при получении данных: "
                                                  f"{get_responce.status_code}, тело-ответа: {get_responce.text}")
@@ -192,7 +189,6 @@ class TestItems():
         else:
             print(f"Ошибка при фильтрации по title: {responce.status_code}, {responce.text}")
 
-
         title_filter_2 = "w"
         responce_2 = auth_session.get(f"{self.endpoint}{title_filter_2}")
 
@@ -232,11 +228,9 @@ class TestItems():
 
         items = get_responce.json()
         titles = [item["title"] for item in items["data"]]
-        desc_titles = sorted(titles, reverse=True)
+        # desc_titles = sorted(titles, reverse=True)
         asc_titles = sorted(titles)
         print(asc_titles)
-
-
 
     # PUT /items/{id} — полное обновление элемента.
     def test_update_item(self, auth_session, item_data, item_data_update):
@@ -258,7 +252,6 @@ class TestItems():
         assert data_put["title"] == item_data_update["title"], "Данные в поле title не обновлены"
         assert data_put["description"] == item_data_update["description"], "Данные в поле description не обновлены"
         print(f"\n {data_put}")
-
 
     # Статус ответ приходит 401, вместо 422 (как заявлено в документации)
     def test_update_not_auth(self, auth_session, item_data, item_data_update):
@@ -348,8 +341,8 @@ class TestItems():
         assert "detail" in delete_responce.json(), "Тело ответа содержит другой ответ"
 
     def test_delete_non_existent_id(self, auth_session):
-        id = "6e04c8fe-3238-4a11-bce6-a368b0"
-        delete_responce = auth_session.delete(f"{self.endpoint}{id}")
+        itm_id = "6e04c8fe-3238-4a11-bce6-a368b0"
+        delete_responce = auth_session.delete(f"{self.endpoint}{itm_id}")
         assert delete_responce.status_code == 422, (f"Неверный статус код при удалении объекта: "
                                                     f"{delete_responce.status_code}, "
                                                     f"тело ответа: {delete_responce.text}")
