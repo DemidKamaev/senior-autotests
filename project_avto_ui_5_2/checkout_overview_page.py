@@ -1,5 +1,6 @@
 from project_avto_ui_5_2.base_page import BasePage
 
+
 class CheckOverviewPage(BasePage):
     TITLE_SELECTOR = '.title'
     ITEM_SELECTOR = '.cart_item'
@@ -23,4 +24,3 @@ class CheckOverviewPage(BasePage):
     def button_finish_click(self):
         if self._get_full_url() == self.CHECK_OVERVIEW_URL:
             self.wait_for_selector_and_click(self.BTN_FINISH_SELECTOR)
-

@@ -18,7 +18,6 @@ class CheckoutCompletePage(BasePage):
         super().__init__(page)
         self._endpoint = 'checkout-complete.html'
 
-
     def assert_all_elements_page(self):
         self.assert_text_in_element(self.CHECKOUT_COMPLETE_SELECTOR, "Checkout: Complete!")
         self.assert_element_is_visible(self.IMG_SUCCESS)
@@ -33,7 +32,6 @@ class CheckoutCompletePage(BasePage):
         self.assert_element_is_visible(self.BUTTON_ABOUT_SELECTOR)
         self.assert_element_is_visible(self.LOGOUT_SELECTOR)
         self.assert_element_is_visible(self.RESET_APP_STATE_SELECTOR)
-
 
     def logout(self):
         self.wait_for_selector_and_click(self.LOGOUT_SELECTOR)

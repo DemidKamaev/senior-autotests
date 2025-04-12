@@ -27,10 +27,3 @@ class CheckoutPage(BasePage):
         self.wait_for_selector_and_click(self.BUTTON_CONTINUE_SELECTOR)
         self.assert_url_is_correct(self.URL_OVERVIEW)
         self.assert_text_present_on_page('Checkout: Overview')
-
-
-
-
-
-
-

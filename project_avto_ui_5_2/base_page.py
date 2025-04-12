@@ -29,7 +29,6 @@ class BasePage:
         self.page.wait_for_selector(selector)
         self.page.type(selector, value, delay=delay)
 
-
     def assert_element_is_visible(self, selector):
         expect(self.page.locator(selector)).to_be_visible()
 

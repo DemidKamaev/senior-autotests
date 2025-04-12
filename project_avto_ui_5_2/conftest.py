@@ -10,4 +10,3 @@ def browser():
 
     browser.close()
     playwright.stop()
-
