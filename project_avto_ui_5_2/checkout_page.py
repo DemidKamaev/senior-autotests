@@ -8,6 +8,11 @@ class CheckoutPage(BasePage):
     POSTAL_CODE_SELECTOR = '#postal-code'
     BUTTON_CONTINUE_SELECTOR = '#continue'
     BUTTON_FINISH_SELECTOR = '#finish'
+    URL_OVERVIEW = 'https://www.saucedemo.com/checkout-step-two.html'
+
+    def __init__(self, page):
+        super().__init__(page)
+        self._endpoint = 'checkout-step-one.html'
 
     def start_check_in_form(self):
         self.wait_for_selector_and_click(self.BUTTON_CHECKOUT_SELECTOR)
@@ -20,9 +25,8 @@ class CheckoutPage(BasePage):
         self.assert_input_value(self.POSTAL_CODE_SELECTOR, postal_code)
         self.assert_element_is_visible(self.BUTTON_CONTINUE_SELECTOR)
         self.wait_for_selector_and_click(self.BUTTON_CONTINUE_SELECTOR)
+        self.assert_url_is_correct(self.URL_OVERVIEW)
         self.assert_text_present_on_page('Checkout: Overview')
-        self.assert_element_is_visible(self.BUTTON_FINISH_SELECTOR)
-        self.wait_for_selector_and_click(self.BUTTON_FINISH_SELECTOR)
 
 
 
